@@ -1,0 +1,53 @@
+.mail-preview {
+    display: grid;
+    grid-template-columns: 180px 1fr 90px;
+    gap: 1em;
+    align-items: center;
+    padding: 0 1em;
+    height: 40px;
+    cursor: pointer;
+    color: #5f6368;
+}
+
+.mail-preview .mail-sender,
+.mail-preview .mail-content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.mail-preview .mail-date {
+    text-align: right;
+    font-size: 12px;
+}
+
+.mail-preview .mail-body-preview {
+    color: #5f6368;
+    font-weight: 400;
+}
+
+.is-unread .mail-preview .mail-sender,
+.is-unread .mail-preview .mail-subject,
+.is-unread .mail-preview .mail-date {
+    font-weight: 700;
+    color: #202124;
+}
+
+@media (max-width: 600px) {
+    .mail-preview {
+        grid-template-columns: 1fr 60px;
+        grid-template-rows: auto auto;
+        height: auto;
+        padding: .6em 1em;
+        gap: 0 .5em;
+    }
+
+    .mail-preview .mail-date {
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    .mail-preview .mail-content {
+        grid-column: 1 / -1;
+    }
+}
