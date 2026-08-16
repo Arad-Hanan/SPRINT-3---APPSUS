@@ -66,10 +66,6 @@ export function NotePreview({ note }) {
             <h4>{noteTitle}</h4>
             {txtToShow}
 
-            <div className="note_btn">
-                <button>Edit</button>
-                <button>X</button>
-            </div>
         </section>
     )
 }

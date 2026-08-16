@@ -18,6 +18,11 @@ export function NoteIndex() {
             .catch(err => console.log('Had issues loading notes:', err))
     }
 
+    function onRemoveNote(noteId) {
+        noteService.remove(noteId)
+            .then(() => { setNotes(prev => prev.filter(note => note.id !== noteId)) })
+            .catch(err => showErrorMsg(`Couldn't remove ${noteId}`))
+    }
 
     if (!notes) return <div className="notes-loading">Loading...</div>
 
@@ -26,7 +31,7 @@ export function NoteIndex() {
             <NoteHeader />
 
             <section className="notes_container">
-                <NoteList notes={notes} />
+                <NoteList notes={notes} onRemoveNote={onRemoveNote} />
             </section>
 
             <button className="addNote_btn">+</button>
