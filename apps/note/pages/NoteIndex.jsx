@@ -1,5 +1,6 @@
 import { noteService } from '../services/note.service.js'
 import { NoteList } from '../cmps/NoteList.jsx'
+import { NoteHeader } from '../cmps/NoteHeader.jsx'
 
 const { useState, useEffect } = React
 
@@ -21,8 +22,14 @@ export function NoteIndex() {
     if (!notes) return <div className="notes-loading">Loading...</div>
 
     return (
-        < section className="notes_container" >
-            <NoteList notes={notes} />
+        <section className="notes_index">
+            <NoteHeader />
+
+            <section className="notes_container">
+                <NoteList notes={notes} />
+            </section>
+
+            <button className="addNote_btn">+</button>
         </section >
     )
 }

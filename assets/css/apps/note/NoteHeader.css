@@ -1,0 +1,10 @@
+.note_header {
+    text-align: center;
+
+    border: 1px solid #e8d9f5;
+    border-radius: 12px;
+    margin: 15px;
+
+    background: linear-gradient(135deg, #fff8d6 0%, #f3f7ff 50%, #fce8f5 100%);
+    box-shadow: 0 2px 8px rgba(180, 170, 220, 0.12);
+}

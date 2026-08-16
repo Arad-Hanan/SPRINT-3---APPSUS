@@ -1,4 +1,3 @@
-
 @import './basics/vars.css';
 @import './basics/base.css';
 @import './basics/helpers.css';
@@ -13,3 +12,7 @@
 @import './apps/mail/MailList.css';
 @import './apps/mail/MailPreview.css';
 @import './apps/mail/MailDetails.css';
+
+@import './apps/note/NoteIndex.css';
+@import './apps/note/NoteList.css';
+@import './apps/note/NoteHeader.css';

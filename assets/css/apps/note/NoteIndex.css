@@ -1,1 +1,8 @@
- /* note index */
+.notes_container {
+    columns: 3 200px;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 10px;
+}
