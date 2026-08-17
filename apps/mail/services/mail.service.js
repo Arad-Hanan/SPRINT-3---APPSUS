@@ -13,6 +13,8 @@ export const mailService = {
     getById,
     save,
     remove,
+    getUnreadCount,
+    getEmptyMail,
     getDefaultFilter,
     getMailDateStr,
     loggedinUser,
@@ -39,11 +41,30 @@ function getById(mailId) {
 }
 
 function save(mail) {
-    return storageService.put(MAIL_KEY, mail)
+    if (mail.id) return storageService.put(MAIL_KEY, mail)
+    return storageService.post(MAIL_KEY, mail)
 }
 
 function remove(mailId) {
     return storageService.remove(MAIL_KEY, mailId)
+}
+
+function getUnreadCount() {
+    return query({ status: 'inbox' })
+        .then(mails => mails.filter(mail => !mail.isRead).length)
+}
+
+function getEmptyMail({ to = '', subject = '', body = '' } = {}) {
+    return {
+        createdAt: Date.now(),
+        subject,
+        body,
+        isRead: true,
+        sentAt: null,
+        removedAt: null,
+        from: loggedinUser.email,
+        to,
+    }
 }
 
 function getDefaultFilter() {

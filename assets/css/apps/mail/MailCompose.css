@@ -1,0 +1,109 @@
+.mail-compose {
+    position: fixed;
+    bottom: 0;
+    right: 2em;
+    width: 500px;
+    max-width: calc(100% - 2em);
+    background-color: #fff;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.mail-compose .compose-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f2f6fc;
+    border-radius: 8px 8px 0 0;
+    padding: .6em 1em;
+}
+
+.mail-compose .compose-header h2 {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.mail-compose .btn-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #5f6368;
+    font-size: 14px;
+    padding: .3em .5em;
+    border-radius: 50%;
+}
+
+.mail-compose .btn-close:hover {
+    background-color: #dadce0;
+}
+
+.mail-compose form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1em 1em;
+}
+
+.mail-compose input,
+.mail-compose textarea {
+    font-family: inherit;
+    font-size: 14px;
+    color: #202124;
+    border: none;
+    border-bottom: 1px solid #f1f3f4;
+    padding: .8em 0;
+    outline: none;
+    resize: none;
+}
+
+.mail-compose input:focus,
+.mail-compose textarea:focus {
+    border-bottom-color: #dadce0;
+}
+
+.mail-compose textarea {
+    border-bottom: none;
+    min-height: 240px;
+    margin-top: .5em;
+    line-height: 1.6;
+}
+
+.mail-compose .btn-send {
+    align-self: flex-start;
+    background-color: #0b57d0;
+    color: #fff;
+    border: none;
+    border-radius: 18px;
+    padding: .6em 1.8em;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.mail-compose .btn-send:hover {
+    background-color: #0842a0;
+}
+
+.mail-compose .btn-send:disabled {
+    background-color: #dadce0;
+    color: #5f6368;
+    cursor: default;
+}
+
+@media (max-width: 600px) {
+    .mail-compose {
+        right: 0;
+        left: 0;
+        top: 0;
+        width: auto;
+        max-width: none;
+        border-radius: 0;
+    }
+
+    .mail-compose textarea {
+        min-height: 50vh;
+    }
+}

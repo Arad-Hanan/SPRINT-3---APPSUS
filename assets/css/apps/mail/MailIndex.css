@@ -10,6 +10,51 @@
     box-shadow: 0 1px 2px rgba(60, 64, 67, .3);
 }
 
+.mail-index-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+    padding: 1em;
+    border-bottom: 1px solid #f1f3f4;
+}
+
+.mail-index-header .btn-compose {
+    display: flex;
+    align-items: center;
+    gap: .6em;
+    background-color: #c2e7ff;
+    color: #001d35;
+    border: none;
+    border-radius: 16px;
+    padding: .9em 1.5em;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.mail-index-header .btn-compose:hover {
+    background-color: #b3dcf7;
+    box-shadow: 0 1px 3px rgba(60, 64, 67, .3);
+}
+
+.mail-index-header .inbox-title {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.mail-index-header .unread-count {
+    background-color: #0b57d0;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: .15em .6em;
+}
+
 .mail-loading {
     font-family: Roboto, Arial, sans-serif;
     color: #5f6368;
