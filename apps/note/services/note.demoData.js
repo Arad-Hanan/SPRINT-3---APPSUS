@@ -46,7 +46,7 @@ export const demoNotes = [
     },
     {
         id: 'n104',
-        createdAt: 1112222,
+        createdAt: 1113000,
         type: 'NoteTxt',
         isPinned: true,
         style: {
@@ -58,7 +58,7 @@ export const demoNotes = [
     },
     {
         id: 'n105',
-        createdAt: 1112222,
+        createdAt: 1113001,
         type: 'NoteTxt',
         isPinned: false,
         style: {
@@ -70,7 +70,7 @@ export const demoNotes = [
     },
     {
         id: 'n106',
-        createdAt: 1112224,
+        createdAt: 1113002,
         type: 'NoteTodos',
         isPinned: true,
         style: {
@@ -87,8 +87,32 @@ export const demoNotes = [
             ]
         }
     },
-    // {},
-    // {},
+    {
+        id: 'n107',
+        createdAt: 1113003,
+        type: 'NoteImg',
+        isPinned: true,
+        style: {
+            backgroundColor: utilService.getRandomColor
+        },
+        info: {
+            title: `Who doesn't love random images?`,
+            url: 'https://picsum.photos/200/300?random=1'
+        }
+    },
+    {
+        id: 'n107',
+        createdAt: 1113003,
+        type: 'NoteImg',
+        isPinned: false,
+        style: {
+            backgroundColor: utilService.getRandomColor
+        },
+        info: {
+            title: `Who doesn't love another random image?`,
+            url: 'https://picsum.photos/200/300?random=2'
+        }
+    },
     // {},
     // {}
 ]

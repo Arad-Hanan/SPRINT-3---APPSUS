@@ -1,0 +1,9 @@
+.todos_box{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.todos_box>*{
+    margin-inline-start: 4px;
+}

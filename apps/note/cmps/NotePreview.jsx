@@ -2,12 +2,14 @@ import { noteService } from '../services/note.service.js'
 
 const { useState } = React
 const { Link } = ReactRouterDOM
+const imgLoader = '../../assets/img/Loading_icon.gif'
 
 export function NotePreview({ note }) {
     let noteTitle = ''
     let txtToShow = ''
 
     const [todos, setTodos] = useState(note.info.todos || [])
+    const [imgSrc, setImgSrc] = useState(note.info.url || [])
 
     const handleChange = (todoIdx) => {
         setTodos(prevTodos => prevTodos.map((todo, idx) => (
@@ -41,13 +43,16 @@ export function NotePreview({ note }) {
             break
 
         case 'NoteImg':
-            txtToShow = `someday I'll make images`
+            noteTitle = note.info.title
+            txtToShow = <img src={imgSrc}
+                alt={note.info.title}
+                onError={() => setImgSrc(imgLoader)} />
             break
 
         case 'NoteTodos':
             noteTitle = note.info.title
             txtToShow = (
-                <section>
+                <section className="todos_box">
                     {todos.map((todo, idx) => (
                         <label key={`${todo.id}:${idx}`}>
                             <input type="checkbox"
