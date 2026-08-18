@@ -31,7 +31,8 @@ export function NoteIndex() {
             <NoteHeader />
 
             <section className="notes_container">
-                <NoteList notes={notes} onRemoveNote={onRemoveNote} />
+                <NoteList notes={notes}
+                    onRemoveNote={onRemoveNote} />
             </section>
 
             <button className="addNote_btn">+</button>

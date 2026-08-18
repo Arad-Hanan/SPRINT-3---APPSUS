@@ -18,6 +18,7 @@ export function NotePreview({ note }) {
             setImgFailed(false)
             return
         }
+
         setImgSrc(imgLoader)
         setImgFailed(false)
 
@@ -91,9 +92,10 @@ export function NotePreview({ note }) {
 
     return (
         <section>
+
             <h4>{noteTitle}</h4>
             {txtToShow}
 
-        </section>
+        </section >
     )
 }

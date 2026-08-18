@@ -1,4 +1,5 @@
 .note {
+    position: relative;
     text-align: center;
     background-color: azure;
 
@@ -22,4 +23,13 @@
 
 .note_btn> :last-child {
     margin-inline-end: 5px;
+}
+
+.pinned_note {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #555;
 }

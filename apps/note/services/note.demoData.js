@@ -74,7 +74,7 @@ export const demoNotes = [
         type: 'NoteTodos',
         isPinned: true,
         style: {
-            backgroundColor: utilService.getRandomColor
+            backgroundColor: utilService.getRandomColor()
         },
         info: {
             title: `Who doesn't like pointless lists?`,
@@ -93,7 +93,7 @@ export const demoNotes = [
         type: 'NoteImg',
         isPinned: true,
         style: {
-            backgroundColor: utilService.getRandomColor
+            backgroundColor: utilService.getRandomColor()
         },
         info: {
             title: `Who doesn't love random images?`,
@@ -106,7 +106,7 @@ export const demoNotes = [
         type: 'NoteImg',
         isPinned: false,
         style: {
-            backgroundColor: utilService.getRandomColor
+            backgroundColor: utilService.getRandomColor()
         },
         info: {
             title: `Who doesn't love another random image?`,
@@ -114,5 +114,9 @@ export const demoNotes = [
         }
     },
     // {},
-    // {}
+    // {},
+    // {},
+    // {},
+    // {},
+    // {},
 ]
