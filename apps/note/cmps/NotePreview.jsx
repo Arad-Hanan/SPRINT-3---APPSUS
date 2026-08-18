@@ -1,6 +1,6 @@
 import { noteService } from '../services/note.service.js'
 
-const { useState } = React
+const { useState, useEffect } = React
 const { Link } = ReactRouterDOM
 const imgLoader = '../../assets/img/Loading_icon.gif'
 
@@ -9,7 +9,27 @@ export function NotePreview({ note }) {
     let txtToShow = ''
 
     const [todos, setTodos] = useState(note.info.todos || [])
-    const [imgSrc, setImgSrc] = useState(note.info.url || [])
+    const [imgSrc, setImgSrc] = useState(imgLoader)
+    const [imgFailed, setImgFailed] = useState(false)
+
+    useEffect(imgHandler => {
+        if (note.type !== 'NoteImg') {
+            setImgSrc('')
+            setImgFailed(false)
+            return
+        }
+        setImgSrc(imgLoader)
+        setImgFailed(false)
+
+        const img = new Image()
+        img.src = note.info.url
+
+        img.onload = () => setImgSrc(note.info.url)
+        img.onerror = () => {
+            setImgFailed(true)
+            setImgSrc('')
+        }
+    }, [])
 
     const handleChange = (todoIdx) => {
         setTodos(prevTodos => prevTodos.map((todo, idx) => (
@@ -44,9 +64,12 @@ export function NotePreview({ note }) {
 
         case 'NoteImg':
             noteTitle = note.info.title
-            txtToShow = <img src={imgSrc}
-                alt={note.info.title}
-                onError={() => setImgSrc(imgLoader)} />
+
+            if (!note.info.url || imgFailed) {
+                txtToShow = <p>{'There was a problem loading the image'}</p>
+            } else {
+                txtToShow = <img src={imgSrc || imgLoader} alt={noteTitle || ''} />
+            }
             break
 
         case 'NoteTodos':
