@@ -6,6 +6,40 @@
 
 .mail-row {
     border-bottom: 1px solid #f1f3f4;
+    position: relative;
+}
+
+.mail-actions {
+    display: none;
+    align-items: center;
+    gap: .3em;
+    position: absolute;
+    top: 0;
+    right: 1em;
+    height: 100%;
+}
+
+.mail-row:hover .mail-actions {
+    display: flex;
+}
+
+.mail-row:hover .mail-date {
+    visibility: hidden;
+}
+
+.mail-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #5f6368;
+    font-size: 14px;
+    padding: .5em;
+    border-radius: 50%;
+}
+
+.mail-actions button:hover {
+    background-color: #dadce0;
+    color: #202124;
 }
 
 .mail-row:last-child {

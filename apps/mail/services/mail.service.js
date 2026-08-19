@@ -32,6 +32,10 @@ function query(filterBy = getDefaultFilter()) {
             mailsToShow = mailsToShow.filter(mail => mail.from === loggedinUser.email)
         }
 
+        if (filterBy.isRead !== null && filterBy.isRead !== undefined) {
+            mailsToShow = mailsToShow.filter(mail => mail.isRead === filterBy.isRead)
+        }
+
         return mailsToShow.sort((mail1, mail2) => mail2.sentAt - mail1.sentAt)
     })
 }
@@ -68,7 +72,7 @@ function getEmptyMail({ to = '', subject = '', body = '' } = {}) {
 }
 
 function getDefaultFilter() {
-    return { status: 'inbox' }
+    return { status: 'inbox', isRead: null }
 }
 
 function getMailDateStr(timestamp) {

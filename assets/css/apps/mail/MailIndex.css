@@ -55,6 +55,11 @@
     padding: .15em .6em;
 }
 
+.btn-icon {
+    font-size: 15px;
+    line-height: 1;
+}
+
 .mail-loading {
     font-family: Roboto, Arial, sans-serif;
     color: #5f6368;
