@@ -10,19 +10,37 @@
     box-shadow: 0 1px 2px rgba(60, 64, 67, .3);
 }
 
-.mail-details .btn-back {
+.mail-details-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+    flex-wrap: wrap;
+    margin-bottom: 1em;
+}
+
+.mail-details-toolbar button {
+    display: flex;
+    align-items: center;
+    gap: .6em;
     background: none;
     border: none;
     cursor: pointer;
+    font-family: inherit;
+    font-size: 14px;
     color: #5f6368;
-    font-size: 16px;
-    padding: .5em;
-    border-radius: 50%;
-    margin-bottom: .5em;
+    padding: .6em 1em;
+    border-radius: 18px;
 }
 
-.mail-details .btn-back:hover {
+.mail-details-toolbar button:hover {
     background-color: #f1f3f4;
+    color: #202124;
+}
+
+.mail-details-actions {
+    display: flex;
+    gap: .3em;
 }
 
 .mail-details-subject {

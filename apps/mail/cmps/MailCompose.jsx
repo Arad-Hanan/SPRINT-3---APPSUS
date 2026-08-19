@@ -38,7 +38,7 @@ export function MailCompose({ onClose, onSent }) {
             <header className="compose-header">
                 <h2>New Message</h2>
                 <button type="button" className="btn-close" onClick={onClose} title="Close">
-                    <i className="fa-solid fa-xmark"></i>
+                    <span className="btn-icon">✕</span>
                 </button>
             </header>
 
