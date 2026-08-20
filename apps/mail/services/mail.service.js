@@ -36,7 +36,24 @@ function query(filterBy = getDefaultFilter()) {
             mailsToShow = mailsToShow.filter(mail => mail.isRead === filterBy.isRead)
         }
 
-        return mailsToShow.sort((mail1, mail2) => mail2.sentAt - mail1.sentAt)
+        if (filterBy.txt) {
+            const txt = filterBy.txt.toLowerCase()
+            mailsToShow = mailsToShow.filter(mail =>
+                mail.subject.toLowerCase().includes(txt) ||
+                mail.body.toLowerCase().includes(txt) ||
+                mail.from.toLowerCase().includes(txt) ||
+                mail.to.toLowerCase().includes(txt)
+            )
+        }
+
+        const sortDir = filterBy.sortDir || -1
+        if (filterBy.sortBy === 'subject') {
+            mailsToShow.sort((mail1, mail2) => mail1.subject.localeCompare(mail2.subject) * sortDir)
+        } else {
+            mailsToShow.sort((mail1, mail2) => (mail1.sentAt - mail2.sentAt) * sortDir)
+        }
+
+        return mailsToShow
     })
 }
 
@@ -72,7 +89,7 @@ function getEmptyMail({ to = '', subject = '', body = '' } = {}) {
 }
 
 function getDefaultFilter() {
-    return { status: 'inbox', isRead: null }
+    return { status: 'inbox', txt: '', isRead: null, sortBy: 'date', sortDir: -1 }
 }
 
 function getMailDateStr(timestamp) {

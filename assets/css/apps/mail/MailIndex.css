@@ -11,6 +11,7 @@
 }
 
 .mail-index-header {
+    flex-wrap: wrap;
     display: flex;
     align-items: center;
     gap: 1.5em;

@@ -1,0 +1,30 @@
+.mail-sort {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    color: #5f6368;
+    font-size: 13px;
+}
+
+.mail-sort button {
+    font-family: inherit;
+    font-size: 13px;
+    color: #5f6368;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 16px;
+    padding: .5em 1em;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.mail-sort button:hover {
+    background-color: #f1f3f4;
+}
+
+.mail-sort button.active {
+    background-color: #c2e7ff;
+    border-color: #c2e7ff;
+    color: #001d35;
+    font-weight: 500;
+}

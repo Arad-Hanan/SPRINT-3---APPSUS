@@ -2,6 +2,7 @@ import { mailService } from '../services/mail.service.js'
 import { MailList } from '../cmps/MailList.jsx'
 import { MailCompose } from '../cmps/MailCompose.jsx'
 import { MailFilter } from '../cmps/MailFilter.jsx'
+import { MailSort } from '../cmps/MailSort.jsx'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
 const { useState, useEffect } = React
@@ -80,6 +81,8 @@ export function MailIndex() {
                 </h2>
 
                 <MailFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
+
+                <MailSort filterBy={filterBy} onSetFilterBy={setFilterBy} />
             </header>
 
             <MailList
