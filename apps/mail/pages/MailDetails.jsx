@@ -1,4 +1,5 @@
 import { mailService } from '../services/mail.service.js'
+import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
 const { useState, useEffect } = React
 const { useParams, useNavigate } = ReactRouterDOM
@@ -16,12 +17,36 @@ export function MailDetails() {
     function loadMail() {
         mailService.getById(mailId)
             .then(mail => {
-                setMail(mail)
-                if (!mail.isRead) mailService.save({ ...mail, isRead: true })
+                if (mail.isRead) return setMail(mail)
+
+                const readMail = { ...mail, isRead: true }
+                setMail(readMail)
+                mailService.save(readMail)
             })
             .catch(err => {
                 console.log('Had issues loading mail:', err)
                 navigate('/mail')
+            })
+    }
+
+    function onMarkAsUnread() {
+        mailService.save({ ...mail, isRead: false })
+            .then(() => navigate('/mail'))
+            .catch(err => {
+                console.log('Had issues updating mail:', err)
+                showErrorMsg('Could not update the mail')
+            })
+    }
+
+    function onRemoveMail() {
+        mailService.save({ ...mail, removedAt: Date.now() })
+            .then(() => {
+                showSuccessMsg('Mail moved to trash')
+                navigate('/mail')
+            })
+            .catch(err => {
+                console.log('Had issues removing mail:', err)
+                showErrorMsg('Could not remove the mail')
             })
     }
 
@@ -37,9 +62,24 @@ export function MailDetails() {
 
     return (
         <section className="mail-details">
-            <button className="btn-back" onClick={() => navigate('/mail')} title="Back to inbox">
-                <i className="fa-solid fa-arrow-left"></i>
-            </button>
+            <div className="mail-details-toolbar">
+                <button className="btn-back" onClick={() => navigate('/mail')}>
+                    <span className="btn-icon">←</span>
+                    <span>Back to inbox</span>
+                </button>
+
+                <div className="mail-details-actions">
+                    <button onClick={onMarkAsUnread} title="Mark as unread">
+                        <span className="btn-icon">✉</span>
+                        <span>Mark unread</span>
+                    </button>
+
+                    <button onClick={onRemoveMail} title="Delete">
+                        <span className="btn-icon">🗑</span>
+                        <span>Delete</span>
+                    </button>
+                </div>
+            </div>
 
             <h1 className="mail-details-subject">{mail.subject}</h1>
 

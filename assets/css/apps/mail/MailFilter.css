@@ -1,0 +1,24 @@
+.mail-filter {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    margin-inline-start: auto;
+    color: #5f6368;
+    font-size: 13px;
+}
+
+.mail-filter select {
+    font-family: inherit;
+    font-size: 13px;
+    color: #202124;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+    border-radius: 16px;
+    padding: .5em 1em;
+    cursor: pointer;
+    outline: none;
+}
+
+.mail-filter select:hover {
+    background-color: #f1f3f4;
+}

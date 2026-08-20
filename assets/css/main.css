@@ -13,6 +13,7 @@
 @import './apps/mail/MailPreview.css';
 @import './apps/mail/MailDetails.css';
 @import './apps/mail/MailCompose.css';
+@import './apps/mail/MailFilter.css';
 
 @import './apps/note/NoteIndex.css';
 @import './apps/note/NoteList.css';
