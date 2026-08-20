@@ -7,3 +7,10 @@
 .todos_box>*{
     margin-inline-start: 4px;
 }
+
+.note_video {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+}

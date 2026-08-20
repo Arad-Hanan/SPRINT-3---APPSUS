@@ -17,6 +17,19 @@ export const demoNotes = [
     },
     {
         id: 'n102',
+        createdAt: 1113003,
+        type: 'NoteVid',
+        isPinned: false,
+        style: {
+            backgroundColor: utilService.getRandomColor()
+        },
+        info: {
+            title: `Some video...`,
+            url: 'https://www.youtube.com/watch?v=syrDx15PHCs'
+        }
+    },
+    {
+        id: 'n103',
         createdAt: 1112223,
         type: 'NoteImg',
         isPinned: false,
@@ -29,7 +42,7 @@ export const demoNotes = [
         }
     },
     {
-        id: 'n103',
+        id: 'n104',
         createdAt: 1112224,
         type: 'NoteTodos',
         isPinned: false,
@@ -45,7 +58,7 @@ export const demoNotes = [
         }
     },
     {
-        id: 'n104',
+        id: 'n105',
         createdAt: 1113000,
         type: 'NoteTxt',
         isPinned: true,
@@ -57,7 +70,20 @@ export const demoNotes = [
         }
     },
     {
-        id: 'n105',
+        id: 'n106',
+        createdAt: 1113003,
+        type: 'NoteVid',
+        isPinned: false,
+        style: {
+            backgroundColor: utilService.getRandomColor()
+        },
+        info: {
+            title: `What do to do with broken video URL?`,
+            url: `https://can't_load_I'm_broke.vidSite.gov`
+        }
+    },
+    {
+        id: 'n107',
         createdAt: 1113001,
         type: 'NoteTxt',
         isPinned: false,
@@ -69,7 +95,7 @@ export const demoNotes = [
         }
     },
     {
-        id: 'n106',
+        id: 'n108',
         createdAt: 1113002,
         type: 'NoteTodos',
         isPinned: true,
@@ -88,7 +114,7 @@ export const demoNotes = [
         }
     },
     {
-        id: 'n107',
+        id: 'n109',
         createdAt: 1113003,
         type: 'NoteImg',
         isPinned: true,
@@ -101,7 +127,7 @@ export const demoNotes = [
         }
     },
     {
-        id: 'n108',
+        id: 'n110',
         createdAt: 1113003,
         type: 'NoteImg',
         isPinned: false,
@@ -113,8 +139,32 @@ export const demoNotes = [
             url: 'https://picsum.photos/200/100?random=2'
         }
     },
-    // {},
-    // {},
+    {
+        id: 'n111',
+        createdAt: 1113003,
+        type: 'NoteVid',
+        isPinned: true,
+        style: {
+            backgroundColor: utilService.getRandomColor()
+        },
+        info: {
+            title: `Some music...`,
+            url: 'https://www.youtube.com/watch?v=_ccyA6T5Ioc'
+        }
+    },
+    {
+        id: 'n112',
+        createdAt: 1113003,
+        type: 'NoteVid',
+        isPinned: false,
+        style: {
+            backgroundColor: utilService.getRandomColor()
+        },
+        info: {
+            title: `Who are those guys?`,
+            url: 'https://www.youtube.com/watch?v=VjXOwUnJzA0&list=PLSMETuURtTXD2erJYuYtXH16d1_73FOny&index=11'
+        }
+    },
     // {},
     // {},
     // {},

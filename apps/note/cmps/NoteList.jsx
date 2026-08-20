@@ -18,7 +18,7 @@ export function NoteList({ notes, onRemoveNote }) {
 				<button>Edit</button>
 				<button>Color</button>
 				<button>Copy</button>
-				<button>Text2Mail</button>
+				{note.type === 'NoteTxt' && <button>Text2Mail</button>}
 				<button onClick={() => onRemoveNote(note.id)}>X</button>
 			</div>
 		</div>
