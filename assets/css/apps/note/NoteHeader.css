@@ -1,10 +1,34 @@
 .note_header {
+    display: flex;
+
     text-align: center;
+    justify-content: space-between;
 
     border: 1px solid #e8d9f5;
     border-radius: 12px;
-    margin: 15px;
+    margin: 10px;
 
     background: linear-gradient(135deg, #fff8d6 0%, #f3f7ff 50%, #fce8f5 100%);
     box-shadow: 0 2px 8px rgba(180, 170, 220, 0.12);
+}
+
+.note_header > :first-child {
+    margin-inline-start: 10px;
+}
+
+.note_header > :last-child {
+    margin-inline-end: 10px;
+}
+
+.new_note_input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.note_srt_containter{
+    display: flex;
+    align-items: center;
 }

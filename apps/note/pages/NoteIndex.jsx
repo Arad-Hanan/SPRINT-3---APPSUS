@@ -21,7 +21,7 @@ export function NoteIndex() {
     function onRemoveNote(noteId) {
         noteService.remove(noteId)
             .then(() => { setNotes(prev => prev.filter(note => note.id !== noteId)) })
-            .catch(err => showErrorMsg(`Couldn't remove ${noteId}`))
+            .catch(err => showErrorMsg(`Couldn't remove ${noteId}`, err))
     }
 
     if (!notes) return <div className="notes-loading">Loading...</div>
@@ -35,7 +35,6 @@ export function NoteIndex() {
                     onRemoveNote={onRemoveNote} />
             </section>
 
-            <button className="addNote_btn">+</button>
         </section >
     )
 }

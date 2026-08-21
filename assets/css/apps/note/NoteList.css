@@ -4,10 +4,35 @@
     background-color: azure;
 
     height: auto;
-    border: 1px solid lightseagreen;
+    border: 2px solid lightseagreen;
+    border-radius: 8px;
 
-    margin-bottom: 3px;
+    margin-bottom: 8px;
     break-inside: avoid;
+    transition: background-color 0.2s ease;
+}
+
+.note:hover {
+    border: 2px solid darkmagenta;
+
+    background: linear-gradient(110deg, azure 35%, rgba(255, 255, 255, 0.8) 50%, azure 65%);
+    background-size: 200% 100%;
+    animation: note-shimmer 1.2s ease-in-out;
+}
+
+@keyframes note-shimmer {
+    from {
+        background-position: 100% 0;
+    }
+
+    to {
+        background-position: -100% 0;
+    }
+}
+
+.note,
+.note * {
+    user-select: none;
 }
 
 .note_btn {
@@ -32,4 +57,12 @@
     font-size: 0.75rem;
     font-weight: 600;
     color: #555;
+}
+
+.pinned_note:hover {
+    cursor: pointer;
+}
+
+.note_btn>button {
+    cursor: pointer;
 }

@@ -11,15 +11,15 @@ export function NoteList({ notes, onRemoveNote }) {
 			className={`note ${note.type}${note.isPinned ? ' pinned' : ''}`}
 			style={{ backgroundColor: `${note.style.backgroundColor}` }} >
 
-			<span className="pinned_note">{note.isPinned ? 'Pinned' : ''}</span>
+			<span className="pinned_note">{note.isPinned ? '📌' : ''}</span>
 			<NotePreview note={note} />
 
 			<div className="note_btn">
-				<button>Edit</button>
-				<button>Color</button>
+				<button>📝</button>
+				<button>🎨</button>
 				<button>Copy</button>
-				{note.type === 'NoteTxt' && <button>Text2Mail</button>}
-				<button onClick={() => onRemoveNote(note.id)}>X</button>
+				{note.type === 'NoteTxt' && <button>📧</button>}
+				<button onClick={() => onRemoveNote(note.id)}>🗑</button>
 			</div>
 		</div>
 	))

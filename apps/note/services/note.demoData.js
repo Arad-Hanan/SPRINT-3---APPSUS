@@ -1,4 +1,5 @@
 import { utilService } from '../../../services/util.service.js'
+import { noteColors } from './note.color.js'
 
 // Demo data
 
@@ -9,7 +10,7 @@ export const demoNotes = [
         type: 'NoteTxt',
         isPinned: true,
         style: {
-            backgroundColor: '#00d'
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             txt: 'Fullstack Me Baby!'
@@ -21,7 +22,7 @@ export const demoNotes = [
         type: 'NoteVid',
         isPinned: false,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             title: `Some video...`,
@@ -34,7 +35,7 @@ export const demoNotes = [
         type: 'NoteImg',
         isPinned: false,
         style: {
-            backgroundColor: '#0d0'
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             url: 'http://some-img/me',
@@ -47,7 +48,7 @@ export const demoNotes = [
         type: 'NoteTodos',
         isPinned: false,
         style: {
-            backgroundColor: '#d00'
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             title: 'Get my stuff together',
@@ -63,7 +64,7 @@ export const demoNotes = [
         type: 'NoteTxt',
         isPinned: true,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             txt: utilService.makeLorem(8)
@@ -75,7 +76,7 @@ export const demoNotes = [
         type: 'NoteVid',
         isPinned: false,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             title: `What do to do with broken video URL?`,
@@ -88,7 +89,7 @@ export const demoNotes = [
         type: 'NoteTxt',
         isPinned: false,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             txt: utilService.makeLorem(4)
@@ -100,7 +101,7 @@ export const demoNotes = [
         type: 'NoteTodos',
         isPinned: true,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             title: `Who doesn't like pointless lists?`,
@@ -119,7 +120,7 @@ export const demoNotes = [
         type: 'NoteImg',
         isPinned: true,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             title: `Who doesn't love random images?`,
@@ -132,7 +133,7 @@ export const demoNotes = [
         type: 'NoteImg',
         isPinned: false,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             title: `Who doesn't love another random image?`,
@@ -145,7 +146,7 @@ export const demoNotes = [
         type: 'NoteVid',
         isPinned: true,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             title: `Some music...`,
@@ -158,7 +159,7 @@ export const demoNotes = [
         type: 'NoteVid',
         isPinned: false,
         style: {
-            backgroundColor: utilService.getRandomColor()
+            backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
         info: {
             title: `Who are those guys?`,
