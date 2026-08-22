@@ -47,6 +47,18 @@ export function NoteIndex() {
             .catch(err => showErrorMsg(`Couldn't edit ${noteId}`, err))
     }
 
+    function onColorChange(noteId, backgroundColor) {
+        noteService.getById(noteId)
+            .then(note => {
+                note.style = { ...note.style, backgroundColor }
+                return noteService.save(note)
+            })
+            .then(updatedNote => {
+                setNotes(prev => prev.map(note => note.id === updatedNote.id ? updatedNote : note))
+            })
+            .catch(err => showErrorMsg(`Couldn't change the color of ${noteId}`, err))
+    }
+
     function onEditClick(noteId) {
         navigate(`/noteEdit/${noteId}`)
     }
@@ -61,7 +73,8 @@ export function NoteIndex() {
                 <NoteList notes={notes}
                     onRemoveNote={onRemoveNote}
                     onPinClick={onPinClick}
-                    onEditClick={onEditClick} />
+                    onEditClick={onEditClick}
+                    onColorChange={onColorChange} />
             </section>
 
         </section >
