@@ -45,8 +45,11 @@ export function NoteHeader({ filterBy, onSetFilterBy }) {
                 title="Show only pinned notes"
                 onClick={togglePinned}>{filterBy.onlyPinned ? 'Show all' : 'Pinned'}</button>
 
-            <button type="button" onClick={() => setOpenTypeBtn(prevOpen => !prevOpen)}>
-                Type
+            <div className="type-wrapper">
+                <button type="button" onClick={() => setOpenTypeBtn(prevOpen => !prevOpen)}>
+                    Type
+                </button>
+
                 {openTypeBtn && <span className="type-options">
                     <label><input type="radio" name="noteType" value="all"
                         checked={filterBy.type === 'all'} onChange={onTypeChange} />All</label>
@@ -59,8 +62,8 @@ export function NoteHeader({ filterBy, onSetFilterBy }) {
                     <label><input type="radio" name="noteType" value="NoteVid"
                         checked={filterBy.type === 'NoteVid'} onChange={onTypeChange} />Video</label>
                 </span>}
-            </button>
-
+            </div>
+            
             <button title="Sort by time created"
                 onClick={toggleSort}>Time
                 <span>{!filterBy.sortByDate && ' ↕'}

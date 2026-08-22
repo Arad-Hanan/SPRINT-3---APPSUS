@@ -33,7 +33,7 @@
     align-items: center;
 }
 
-.note_srt_containter > button {
+.note_srt_containter>button {
     position: relative;
 }
 
@@ -63,6 +63,10 @@
     cursor: pointer;
 }
 
+.type-options input {
+    cursor: pointer;
+}
+
 .type-options label:hover {
     background-color: #f3f3f3;
 }
@@ -70,4 +74,8 @@
 .greyed-btn {
     background-color: grey;
     opacity: 40%;
+}
+
+.type-wrapper {
+    position: relative;
 }
