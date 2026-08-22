@@ -1,8 +1,18 @@
 import { NotePreview } from './NotePreview.jsx'
 
+const { useNavigate } = ReactRouterDOM
+
 export function NoteList({ notes, onRemoveNote, onPinClick, onEditClick }) {
 
+	const navigate = useNavigate()
+
 	if (!notes.length) return <div className="no-notes">No notes saved</div>
+
+	function sendToMail(note) {
+		const subject = note.info.title || 'No subject'
+		const body = note.info.txt || note.info.url || note.info.todos.map(todo => todo.txt).join('\n') || 'No content'
+		navigate(`/mail/inbox?compose=new&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`)
+	}
 
 	return notes.map(note => (
 		<div key={note.id}
@@ -20,10 +30,10 @@ export function NoteList({ notes, onRemoveNote, onPinClick, onEditClick }) {
 					onClick={() => onEditClick(note.id)}
 				>📝</button>
 				<button title="Change color">🎨</button>
-				{note.type === 'NoteTxt' && <button
+				<button
 					title="Send as mail"
-					// onClick="TBD"
-				>📧</button>}
+					onClick={() => sendToMail(note)}
+				>📧</button>
 				<button title="Delete"
 					onClick={() => onRemoveNote(note.id)}>🗑️</button>
 			</div>

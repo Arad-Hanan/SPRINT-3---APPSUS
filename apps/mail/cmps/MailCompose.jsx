@@ -5,9 +5,12 @@ const { useState, useEffect, useRef } = React
 
 const DRAFT_SAVE_INTERVAL = 5000
 
-export function MailCompose({ draftId, onClose, onSent }) {
+export function MailCompose({ draftId, subject, body, onClose, onSent }) {
 
-    const [mailToSend, setMailToSend] = useState(() => mailService.getEmptyMail())
+    const [mailToSend, setMailToSend] = useState(() => mailService.getEmptyMail({
+        subject: subject || '',
+        body: body || '',
+    }))
     const [isSending, setIsSending] = useState(false)
 
     const mailRef = useRef(mailToSend)

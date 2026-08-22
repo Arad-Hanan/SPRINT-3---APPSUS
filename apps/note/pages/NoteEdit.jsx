@@ -1,7 +1,7 @@
 import { noteService } from '../services/note.service.js'
 
 const { useState, useEffect } = React
-const { useParams, useNavigate } = ReactRouterDOM
+const { useParams, useSearchParams, useNavigate } = ReactRouterDOM
 const imgLoader = '../../assets/img/Loading_icon.gif'
 
 function getYoutubeEmbedUrl(url) {
@@ -22,6 +22,7 @@ function getYoutubeEmbedUrl(url) {
 export function NoteEdit() {
 
     const { noteId } = useParams()
+    const [searchParams] = useSearchParams()
     const [currNote, setCurrNote] = useState(null)
     const navigate = useNavigate()
 
@@ -35,10 +36,12 @@ export function NoteEdit() {
 
     useEffect(() => {
         if (noteId === 'new') {
-            setCurrNote(noteService.getEmptyNot({
+            const txt = searchParams.get('txt') || ''
+
+            setCurrNote(noteService.getEmptyNote({
                 type: 'NoteTxt',
                 isPinned: false,
-                info: { txt: '' }
+                info: { txt }
             }))
             return
         }
