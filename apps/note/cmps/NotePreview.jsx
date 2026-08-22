@@ -48,7 +48,7 @@ export function NotePreview({ note }) {
             setImgFailed(true)
             setImgSrc('')
         }
-    }, [note.type, note.info.url])
+    }, [note])
 
     useEffect(() => {
         if (note.type !== 'NoteVid') {
@@ -60,7 +60,7 @@ export function NotePreview({ note }) {
         const embedUrl = getYoutubeEmbedUrl(note.info.url)
         setVidSrc(embedUrl)
         setVidFailed(!embedUrl)
-    }, [note.type, note.info.url])
+    }, [note])
 
     const handleTodoChange = (todoIdx) => {
         setTodos(prevTodos => prevTodos.map((todo, idx) => (

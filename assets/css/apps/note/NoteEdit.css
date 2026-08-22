@@ -12,14 +12,29 @@
     border-radius: 8px;
 }
 
-.note-edit-text{
+.note-edit-text {
     display: flex;
     justify-content: space-evenly;
 }
 
 .note-edit-btn {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+
     gap: 8px;
+
     margin-top: auto;
+}
+
+.note-edit-btn button{
+    cursor: pointer;
+}
+
+.edit-type-btn button:not(.selectedType) {
+    opacity: 0.55;
+}
+
+.edit-type-btn button.selectedType {
+    border: 1px solid #757575;
+    border-radius: 4px;
 }

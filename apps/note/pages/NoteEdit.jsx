@@ -4,17 +4,34 @@ const { useState, useEffect } = React
 const { useParams, useNavigate } = ReactRouterDOM
 const imgLoader = '../../assets/img/Loading_icon.gif'
 
+function getYoutubeEmbedUrl(url) {
+    try {
+        const parsedUrl = new URL(url)
+        let videoId = parsedUrl.searchParams.get('v')
+
+        if (parsedUrl.hostname === 'youtu.be') videoId = parsedUrl.pathname.slice(1)
+        if (parsedUrl.pathname.startsWith('/embed/')) videoId = parsedUrl.pathname.split('/')[2]
+        if (parsedUrl.pathname.startsWith('/shorts/')) videoId = parsedUrl.pathname.split('/')[2]
+
+        return videoId ? `https://www.youtube.com/embed/${videoId}` : ''
+    } catch (err) {
+        return ''
+    }
+}
+
 export function NoteEdit() {
 
     const { noteId } = useParams()
     const [currNote, setCurrNote] = useState(null)
+    const navigate = useNavigate()
 
     const [todos, setTodos] = useState([])
 
     const [imgSrc, setImgSrc] = useState(imgLoader)
     const [imgFailed, setImgFailed] = useState(false)
 
-    const navigate = useNavigate()
+    const [vidSrc, setVidSrc] = useState('')
+    const [vidFailed, setVidFailed] = useState(false)
 
     useEffect(() => {
         if (noteId === 'new') {
@@ -49,6 +66,18 @@ export function NoteEdit() {
             setImgFailed(true)
             setImgSrc('')
         }
+    }, [currNote])
+
+    useEffect(() => {
+        if (!currNote || currNote.type !== 'NoteVid') {
+            setVidSrc('')
+            setVidFailed(false)
+            return
+        }
+
+        const embedUrl = getYoutubeEmbedUrl(currNote.info.url)
+        setVidSrc(embedUrl)
+        setVidFailed(!embedUrl)
     }, [currNote])
 
     if (!currNote) return <div className="notes-loading">Loading...</div>
@@ -103,7 +132,25 @@ export function NoteEdit() {
             break
 
         case 'NoteVid':
-
+            editBody = <div className="edit-vid-wrapper">
+                <label>
+                    Title:
+                    <input name="title" type="text" value={currNote.info.title || ''} onChange={handleChange} />
+                </label>
+                <label>
+                    Video URL:
+                    <input name="url" type="url" value={currNote.info.url || ''} onChange={handleChange} />
+                </label>
+                {!currNote.info.url || vidFailed
+                    ? <p>There was a problem loading the video</p>
+                    : <iframe className="note_video"
+                        src={vidSrc}
+                        title={currNote.info.title || 'YouTube video'}
+                        onError={() => setVidFailed(true)}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen>
+                    </iframe>}
+            </div>
             break
     }
 
@@ -193,13 +240,74 @@ export function NoteEdit() {
             .catch(err => console.log('Had issues saving note:', err))
     }
 
+    function onTypeButton(type) {
+        if (currNote.type === type) return
+
+        setCurrNote(prevNote => {
+            const currentInfo = prevNote.info || {}
+
+            switch (type) {
+                case 'NoteTxt':
+                    return {
+                        ...prevNote,
+                        type,
+                        info: { txt: currentInfo.txt || '' }
+                    }
+                case 'NoteTodos':
+                    return {
+                        ...prevNote,
+                        type,
+                        info: {
+                            title: currentInfo.title || '',
+                            todos: currentInfo.todos || []
+                        }
+                    }
+                case 'NoteImg':
+                case 'NoteVid':
+                    return {
+                        ...prevNote,
+                        type,
+                        info: {
+                            title: currentInfo.title || '',
+                            url: currentInfo.url || ''
+                        }
+                    }
+                default:
+                    return prevNote
+            }
+        })
+    }
+
+    const getTypeButtonClass = (type) => currNote.type === type ? 'selectedType' : ''
+
     return <form onSubmit={onSave} className="note_edit_container">
 
         {editBody}
 
-        <div className="note-edit-btn">
-            <button>Save</button>
-            <button type="button" onClick={() => navigate('/note')}>Cancel</button>
-        </div>
+        <section className="note-edit-btn">
+            <div className="edit-type-btn">
+                <button
+                    type="button"
+                    className={getTypeButtonClass('NoteTxt')}
+                    onClick={() => onTypeButton('NoteTxt')}>📝</button>
+                <button
+                    type="button"
+                    className={getTypeButtonClass('NoteTodos')}
+                    onClick={() => onTypeButton('NoteTodos')}>📋</button>
+                <button
+                    type="button"
+                    className={getTypeButtonClass('NoteImg')}
+                    onClick={() => onTypeButton('NoteImg')}>🖼️</button>
+                <button
+                    type="button"
+                    className={getTypeButtonClass('NoteVid')}
+                    onClick={() => onTypeButton('NoteVid')}>🎬</button>
+            </div>
+
+            <div className="edit-end-btn">
+                <button>Save</button>
+                <button type="button" onClick={() => navigate('/note')}>Cancel</button>
+            </div>
+        </section>
     </form>
 }
