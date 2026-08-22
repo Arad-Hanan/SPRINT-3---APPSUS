@@ -24,6 +24,9 @@ export function MailIndex() {
     const isComposeOpen = composeParam !== null
     const draftId = (composeParam && composeParam !== 'new') ? composeParam : null
 
+    const composeSubject = searchParams.get('subject')
+    const composeBody = searchParams.get('body')
+
     useEffect(() => {
         loadMails()
     }, [folder, filterBy, location.pathname])
@@ -113,6 +116,8 @@ export function MailIndex() {
             {isComposeOpen &&
                 <MailCompose
                     draftId={draftId}
+                    subject={composeSubject}
+                    body={composeBody}
                     onClose={onCloseCompose}
                     onSent={onMailSent}
                 />}

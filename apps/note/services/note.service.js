@@ -10,7 +10,7 @@ export const noteService = {
     getById,
     save,
     remove,
-    getEmptyNot
+    getEmptyNote
 }
 
 _createNotes()
@@ -51,7 +51,7 @@ function remove(noteId) {
     return storageService.remove(NOTE_KEY, noteId)
 }
 
-function getEmptyNot({ createdAt = Date.now(), type, info }) {
+function getEmptyNote({ createdAt = Date.now(), type, info }) {
     return {
         createdAt,
         type,

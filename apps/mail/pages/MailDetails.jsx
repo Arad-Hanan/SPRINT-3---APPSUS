@@ -42,6 +42,14 @@ export function MailDetails() {
             })
     }
 
+    function sendToNote(mail) {
+        const subject = mail.subject || 'No title'
+        const body = mail.body || 'No content'
+        const txt = `${subject}\n\n${body}`
+
+        navigate(`/noteEdit/new?txt=${encodeURIComponent(txt)}`)
+    }
+
     function onRemoveMail() {
         const isPermanent = (folder === 'trash')
 
@@ -84,6 +92,7 @@ export function MailDetails() {
                         <span>Mark unread</span>
                     </button>
 
+                    <button onClick={() => sendToNote(mail)}> Send to Note </button>
                     <button onClick={onRemoveMail} title={(folder === 'trash') ? 'Delete forever' : 'Delete'}>
                         <span className="btn-icon">🗑</span>
                         <span>{(folder === 'trash') ? 'Delete forever' : 'Delete'}</span>
