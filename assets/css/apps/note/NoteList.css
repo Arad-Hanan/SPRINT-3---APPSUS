@@ -1,23 +1,105 @@
 .note {
     position: relative;
-    text-align: center;
-    background-color: azure;
+    break-inside: avoid;
+    margin-bottom: 16px;
+    padding: 12px 16px 4px;
 
-    height: auto;
-    border: 2px solid lightseagreen;
+    text-align: start;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .12);
     border-radius: 8px;
 
-    margin-bottom: 8px;
-    break-inside: avoid;
-    transition: background-color 0.2s ease;
+    transition: box-shadow .2s ease;
 }
 
 .note:hover {
-    border: 2px solid darkmagenta;
+    box-shadow: 0 1px 2px rgba(60, 64, 67, .3), 0 2px 6px 2px rgba(60, 64, 67, .15);
+}
 
-    background: linear-gradient(110deg, azure 35%, rgba(235, 123, 123, 0.737) 50%, azure 65%);
-    background-size: 200% 100%;
-    animation: note-shimmer 0.8s ease-in-out forwards;
+.note,
+.note * {
+    user-select: none;
+}
+
+.pinned_note {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+
+    font-size: .95rem;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: opacity .15s ease, background-color .15s ease;
+}
+
+.pinned_note:hover {
+    background-color: rgba(0, 0, 0, .08);
+}
+
+.greyedPin {
+    filter: grayscale(1);
+    opacity: 0;
+}
+
+.note:hover .greyedPin {
+    opacity: .5;
+}
+
+.note_btn {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2px;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity .15s ease;
+}
+
+.note:hover .note_btn,
+.note:focus-within .note_btn {
+    opacity: 1;
+}
+
+.note_btn button {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+
+    font-size: .9rem;
+    background: none;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+
+.note_btn button:hover {
+    background-color: rgba(0, 0, 0, .08);
+}
+
+.note::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+
+    background: linear-gradient(110deg,
+            transparent 35%,
+            rgba(255, 255, 255, .6) 50%,
+            transparent 65%);
+    background-size: 220% 100%;
+    background-position: 100% 0;
+    opacity: 0;
+}
+
+.note:hover::after {
+    opacity: 1;
+    animation: note-shimmer .8s ease-in-out forwards;
 }
 
 @keyframes note-shimmer {
@@ -26,48 +108,13 @@
     }
 
     to {
-        background-position: -100% 0;
+        background-position: -120% 0;
     }
 }
 
-.note,
-.note * {
-    user-select: none;
-}
-
-.note_btn {
-    display: flex;
-
-    justify-content: end;
-}
-
-.note_btn button {
-    background-color: beige;
-    margin: 1px;
-}
-
-.note_btn> :last-child {
-    margin-inline-end: 5px;
-}
-
-.pinned_note {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #555;
-}
-
-.pinned_note:hover {
-    cursor: pointer;
-}
-
-.note_btn>button {
-    cursor: pointer;
-}
-
-.greyedPin {
-    filter: grayscale(1);
-    opacity: 0.45;
+@media (prefers-reduced-motion: reduce) {
+    .note:hover::after {
+        animation: none;
+        opacity: 0;
+    }
 }

@@ -1,8 +1,21 @@
+.notes_index {
+    font-family: Roboto, Arial, sans-serif;
+    color: #202124;
+    padding: 0 16px 40px;
+}
+
 .notes_container {
-    columns: 3 200px;
+    columns: 240px 5;
+    column-gap: 16px;
+    margin: 16px auto 0;
+    max-width: 1400px;
+}
 
-    align-items: center;
-    justify-content: center;
-
-    margin: 10px;
+.notes-loading,
+.no-notes {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 15px;
+    color: #5f6368;
+    text-align: center;
+    padding: 64px 16px;
 }
