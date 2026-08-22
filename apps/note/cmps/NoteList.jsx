@@ -16,10 +16,16 @@ export function NoteList({ notes, onRemoveNote, onPinClick, onEditClick }) {
 			<NotePreview note={note} />
 
 			<div className="note_btn">
-				<button onClick={() => onEditClick(note.id)}>📝</button>
-				<button>🎨</button>
-				{note.type === 'NoteTxt' && <button>📧</button>}
-				<button onClick={() => onRemoveNote(note.id)}>🗑</button>
+				<button title="Edit note"
+					onClick={() => onEditClick(note.id)}
+				>📝</button>
+				<button title="Change color">🎨</button>
+				{note.type === 'NoteTxt' && <button
+					title="Send as mail"
+					// onClick="TBD"
+				>📧</button>}
+				<button title="Delete"
+					onClick={() => onRemoveNote(note.id)}>🗑️</button>
 			</div>
 		</div>
 	))

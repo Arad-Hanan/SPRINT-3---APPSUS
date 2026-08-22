@@ -287,18 +287,22 @@ export function NoteEdit() {
         <section className="note-edit-btn">
             <div className="edit-type-btn">
                 <button
+                    title='Text memo'
                     type="button"
                     className={getTypeButtonClass('NoteTxt')}
                     onClick={() => onTypeButton('NoteTxt')}>📝</button>
                 <button
+                    title='Todo checklist'
                     type="button"
                     className={getTypeButtonClass('NoteTodos')}
                     onClick={() => onTypeButton('NoteTodos')}>📋</button>
                 <button
+                    title='Image'
                     type="button"
                     className={getTypeButtonClass('NoteImg')}
                     onClick={() => onTypeButton('NoteImg')}>🖼️</button>
                 <button
+                    title='Video'
                     type="button"
                     className={getTypeButtonClass('NoteVid')}
                     onClick={() => onTypeButton('NoteVid')}>🎬</button>
