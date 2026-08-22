@@ -93,16 +93,6 @@ export function NotePreview({ note }) {
             txtToShow = <p>{note.info.txt}</p>
             break
 
-        case 'NoteImg':
-            noteTitle = note.info.title
-
-            if (!note.info.url || imgFailed) {
-                txtToShow = <p>{'There was a problem loading the image'}</p>
-            } else {
-                txtToShow = <img src={imgSrc || imgLoader} alt={noteTitle || ''} />
-            }
-            break
-
         case 'NoteTodos':
             noteTitle = note.info.title
             txtToShow = (
@@ -117,6 +107,16 @@ export function NotePreview({ note }) {
                     ))}
                 </section>
             )
+            break
+
+        case 'NoteImg':
+            noteTitle = note.info.title
+
+            if (!note.info.url || imgFailed) {
+                txtToShow = <p>{'There was a problem loading the image'}</p>
+            } else {
+                txtToShow = <img src={imgSrc || imgLoader} alt={noteTitle || ''} />
+            }
             break
 
         case 'NoteVid':

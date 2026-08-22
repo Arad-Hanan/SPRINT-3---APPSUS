@@ -6,19 +6,27 @@ import { showErrorMsg } from '../../../services/event-bus.service.js'
 const { useState, useEffect } = React
 const { useNavigate } = ReactRouterDOM
 
+const initialNotesFilter = {
+    onlyPinned: false,
+    type: 'all',
+    sortByDate: false,
+    sortDir: -1
+}
+
 export function NoteIndex() {
 
     const [notes, setNotes] = useState(null)
+    const [notesFilter, setNotesFilter] = useState(initialNotesFilter)
     const navigate = useNavigate()
 
     useEffect(() => {
         loadNotes()
-    }, [])
+    }, [notesFilter])
 
     function loadNotes() {
-        noteService.query()
+        noteService.query(notesFilter)
             .then(fetchedNotes => setNotes(fetchedNotes))
-            .catch(err => console.log('Had issues loading notes:', err))
+            .catch(err => showErrorMsg('Had issues loading notes:', err))
     }
 
     function onRemoveNote(noteId) {
@@ -47,7 +55,7 @@ export function NoteIndex() {
 
     return (
         <section className="notes_index">
-            <NoteHeader />
+            <NoteHeader filterBy={notesFilter} onSetFilterBy={setNotesFilter} />
 
             <section className="notes_container">
                 <NoteList notes={notes}

@@ -15,12 +15,27 @@ export const noteService = {
 
 _createNotes()
 
-function query() {
+function query(filterBy = {}) {
     return storageService.query(NOTE_KEY)
         .then(notes => {
-            return notes
+            let notesToShow = [...notes]
+
+            if (filterBy.onlyPinned) {
+                notesToShow = notesToShow.filter(note => note.isPinned)
+            }
+
+            if (filterBy.type && filterBy.type !== 'all') {
+                notesToShow = notesToShow.filter(note => note.type === filterBy.type)
+            }
+
+            if (filterBy.sortByDate) {
+                const sortDir = filterBy.sortDir || 1
+                notesToShow.sort((note1, note2) =>
+                    (note1.createdAt - note2.createdAt) * sortDir)
+            }
+
+            return notesToShow
         })
-        .catch()
 }
 
 function getById(noteId) {
@@ -36,11 +51,11 @@ function remove(noteId) {
     return storageService.remove(NOTE_KEY, noteId)
 }
 
-function getEmptyNot({ createdAt = Date.now(), type, isPinned, style, info }) {
+function getEmptyNot({ createdAt = Date.now(), type, info }) {
     return {
         createdAt,
         type,
-        isPinned,
+        isPinned: false,
         style: {
             backgroundColor: noteColors[utilService.getRandomIntInclusive(0, noteColors.length - 1)]
         },
