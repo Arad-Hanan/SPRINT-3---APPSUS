@@ -68,6 +68,21 @@ export function MailIndex() {
             })
     }
 
+    function onEmptyTrash() {
+        const isConfirmed = confirm('Delete all messages in the trash? This cannot be undone.')
+        if (!isConfirmed) return
+
+        mailService.emptyTrash()
+            .then(() => {
+                showSuccessMsg('The trash is empty')
+                loadMails()
+            })
+            .catch(err => {
+                console.log('Had issues emptying the trash:', err)
+                showErrorMsg('Could not empty the trash')
+            })
+    }
+
     function onOpenCompose() {
         setSearchParams({ compose: 'new' })
     }
@@ -102,6 +117,15 @@ export function MailIndex() {
                     {isDetailsOpen && <Outlet />}
 
                     {!isDetailsOpen && !mails && <div className="mail-loading">Loading...</div>}
+
+                    {!isDetailsOpen && folder === 'trash' && mails && mails.length > 0 &&
+                        <div className="trash-banner">
+                            <span>{mails.length} {mails.length === 1 ? 'message' : 'messages'} in the trash</span>
+
+                            <button className="btn-empty-trash" onClick={onEmptyTrash}>
+                                Empty trash now
+                            </button>
+                        </div>}
 
                     {!isDetailsOpen && mails &&
                         <MailList
