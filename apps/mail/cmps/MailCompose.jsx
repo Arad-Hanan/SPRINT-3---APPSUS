@@ -1,16 +1,54 @@
 import { mailService } from '../services/mail.service.js'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
-const { useState } = React
+const { useState, useEffect, useRef } = React
 
-export function MailCompose({ onClose, onSent }) {
+const DRAFT_SAVE_INTERVAL = 5000
+
+export function MailCompose({ draftId, onClose, onSent }) {
 
     const [mailToSend, setMailToSend] = useState(() => mailService.getEmptyMail())
     const [isSending, setIsSending] = useState(false)
 
+    const mailRef = useRef(mailToSend)
+    const isSavingRef = useRef(false)
+    const isSentRef = useRef(false)
+
+    mailRef.current = mailToSend
+
+    useEffect(() => {
+        if (!draftId) return
+
+        mailService.getById(draftId)
+            .then(setMailToSend)
+            .catch(err => console.log('Had issues loading the draft:', err))
+    }, [draftId])
+
+    useEffect(() => {
+        const intervalId = setInterval(saveDraft, DRAFT_SAVE_INTERVAL)
+        return () => clearInterval(intervalId)
+    }, [])
+
+    function saveDraft() {
+        const mail = mailRef.current
+
+        if (isSentRef.current || isSavingRef.current) return Promise.resolve()
+        if (!mail.to && !mail.subject && !mail.body) return Promise.resolve()
+
+        isSavingRef.current = true
+        return mailService.save(mail)
+            .then(savedMail => setMailToSend(prevMail => ({ ...prevMail, id: savedMail.id })))
+            .catch(err => console.log('Had issues saving the draft:', err))
+            .finally(() => isSavingRef.current = false)
+    }
+
     function handleChange({ target }) {
         const { name, value } = target
         setMailToSend(prevMail => ({ ...prevMail, [name]: value }))
+    }
+
+    function onCloseCompose() {
+        saveDraft().then(onClose)
     }
 
     function onSubmit(ev) {
@@ -21,6 +59,8 @@ export function MailCompose({ onClose, onSent }) {
         }
 
         setIsSending(true)
+        isSentRef.current = true
+
         mailService.save({ ...mailToSend, sentAt: Date.now() })
             .then(() => {
                 showSuccessMsg('Message sent')
@@ -29,6 +69,7 @@ export function MailCompose({ onClose, onSent }) {
             .catch(err => {
                 console.log('Had issues sending mail:', err)
                 showErrorMsg('Could not send message')
+                isSentRef.current = false
                 setIsSending(false)
             })
     }
@@ -36,8 +77,8 @@ export function MailCompose({ onClose, onSent }) {
     return (
         <section className="mail-compose">
             <header className="compose-header">
-                <h2>New Message</h2>
-                <button type="button" className="btn-close" onClick={onClose} title="Close">
+                <h2>{draftId ? 'Draft' : 'New Message'}</h2>
+                <button type="button" className="btn-close" onClick={onCloseCompose} title="Close">
                     <span className="btn-icon">✕</span>
                 </button>
             </header>

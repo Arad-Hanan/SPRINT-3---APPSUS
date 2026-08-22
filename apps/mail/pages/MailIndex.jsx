@@ -3,10 +3,11 @@ import { MailList } from '../cmps/MailList.jsx'
 import { MailCompose } from '../cmps/MailCompose.jsx'
 import { MailFilter } from '../cmps/MailFilter.jsx'
 import { MailSort } from '../cmps/MailSort.jsx'
+import { MailFolderList } from '../cmps/MailFolderList.jsx'
 import { showSuccessMsg, showErrorMsg } from '../../../services/event-bus.service.js'
 
 const { useState, useEffect } = React
-const { useSearchParams } = ReactRouterDOM
+const { useSearchParams, useParams, useLocation, useMatch, Outlet } = ReactRouterDOM
 
 export function MailIndex() {
 
@@ -15,14 +16,20 @@ export function MailIndex() {
     const [filterBy, setFilterBy] = useState(mailService.getDefaultFilter())
     const [searchParams, setSearchParams] = useSearchParams()
 
-    const isComposeOpen = searchParams.get('compose') !== null
+    const { folder } = useParams()
+    const location = useLocation()
+    const isDetailsOpen = useMatch('/mail/:folder/:mailId')
+
+    const composeParam = searchParams.get('compose')
+    const isComposeOpen = composeParam !== null
+    const draftId = (composeParam && composeParam !== 'new') ? composeParam : null
 
     useEffect(() => {
         loadMails()
-    }, [filterBy])
+    }, [folder, filterBy, location.pathname])
 
     function loadMails() {
-        mailService.query(filterBy)
+        mailService.query({ ...filterBy, status: folder })
             .then(setMails)
             .catch(err => console.log('Had issues loading mails:', err))
 
@@ -41,9 +48,15 @@ export function MailIndex() {
     }
 
     function onRemoveMail(mail) {
-        mailService.save({ ...mail, removedAt: Date.now() })
+        const isPermanent = (folder === 'trash')
+
+        const removePrm = isPermanent
+            ? mailService.remove(mail.id)
+            : mailService.save({ ...mail, removedAt: Date.now() })
+
+        removePrm
             .then(() => {
-                showSuccessMsg('Mail moved to trash')
+                showSuccessMsg(isPermanent ? 'Mail deleted forever' : 'Mail moved to trash')
                 loadMails()
             })
             .catch(err => {
@@ -58,14 +71,13 @@ export function MailIndex() {
 
     function onCloseCompose() {
         setSearchParams({})
-    }
-
-    function onMailSent() {
-        onCloseCompose()
         loadMails()
     }
 
-    if (!mails) return <div className="mail-loading">Loading...</div>
+    function onMailSent() {
+        setSearchParams({})
+        loadMails()
+    }
 
     return (
         <section className="mail-index">
@@ -75,23 +87,35 @@ export function MailIndex() {
                     Compose
                 </button>
 
-                <h2 className="inbox-title">
-                    Inbox
-                    {unreadCount > 0 && <span className="unread-count">{unreadCount}</span>}
-                </h2>
-
                 <MailFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
 
                 <MailSort filterBy={filterBy} onSetFilterBy={setFilterBy} />
             </header>
 
-            <MailList
-                mails={mails}
-                onToggleRead={onToggleRead}
-                onRemoveMail={onRemoveMail}
-            />
+            <div className="mail-body">
+                <MailFolderList unreadCount={unreadCount} />
 
-            {isComposeOpen && <MailCompose onClose={onCloseCompose} onSent={onMailSent} />}
+                <div className="mail-main">
+                    {isDetailsOpen && <Outlet />}
+
+                    {!isDetailsOpen && !mails && <div className="mail-loading">Loading...</div>}
+
+                    {!isDetailsOpen && mails &&
+                        <MailList
+                            mails={mails}
+                            folder={folder}
+                            onToggleRead={onToggleRead}
+                            onRemoveMail={onRemoveMail}
+                        />}
+                </div>
+            </div>
+
+            {isComposeOpen &&
+                <MailCompose
+                    draftId={draftId}
+                    onClose={onCloseCompose}
+                    onSent={onMailSent}
+                />}
         </section>
     )
 }
