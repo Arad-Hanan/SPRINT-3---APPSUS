@@ -51,3 +51,8 @@
         grid-column: 1 / -1;
     }
 }
+
+.mail-preview .draft-tag {
+    color: #c5221f;
+    margin-inline-end: .5em;
+}

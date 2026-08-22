@@ -24,15 +24,16 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
     const selectedValue = (filterBy.isRead === null) ? '' : String(filterBy.isRead)
 
     return (
-        <div className="mail-filter">
+        <React.Fragment>
             <input
                 type="search"
+                className="mail-search"
                 placeholder="Search mail"
                 value={txt}
                 onChange={onTxtChange}
             />
 
-            <label>
+            <label className="mail-read-filter">
                 Show
                 <select value={selectedValue} onChange={onSetIsRead}>
                     <option value="">All</option>
@@ -40,6 +41,6 @@ export function MailFilter({ filterBy, onSetFilterBy }) {
                     <option value="true">Read</option>
                 </select>
             </label>
-        </div>
+        </React.Fragment>
     )
 }
