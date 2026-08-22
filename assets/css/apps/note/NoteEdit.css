@@ -1,0 +1,25 @@
+.note_edit_container {
+    width: min(90%, 600px);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+
+    margin: 10vh auto;
+    padding: 24px;
+
+    background-color: #e8e196;
+    border: 1px solid #757bf0;
+    border-radius: 8px;
+}
+
+.note-edit-text{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.note-edit-btn {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: auto;
+}
