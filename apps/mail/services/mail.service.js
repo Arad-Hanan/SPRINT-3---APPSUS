@@ -13,6 +13,7 @@ export const mailService = {
     getById,
     save,
     remove,
+    emptyTrash,
     getUnreadCount,
     getEmptyMail,
     getDefaultFilter,
@@ -63,6 +64,14 @@ function save(mail) {
 
 function remove(mailId) {
     return storageService.remove(MAIL_KEY, mailId)
+}
+
+function emptyTrash() {
+    return storageService.query(MAIL_KEY).then(mails => {
+        const mailsToKeep = mails.filter(mail => !mail.removedAt)
+        utilService.saveToStorage(MAIL_KEY, mailsToKeep)
+        return mailsToKeep
+    })
 }
 
 function getUnreadCount() {
