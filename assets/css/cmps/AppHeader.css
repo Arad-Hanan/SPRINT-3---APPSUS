@@ -5,11 +5,11 @@
     background: var(--bg1);
 }
 
-nav a {
+.app-header nav a {
     margin: .5em;
 }
 
-nav a.active {
+.app-header nav a.active {
     color: var(--color1);
     font-weight: bold;
     text-decoration: overline;

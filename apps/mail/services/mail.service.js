@@ -17,6 +17,7 @@ export const mailService = {
     getEmptyMail,
     getDefaultFilter,
     getMailDateStr,
+    getMailTime,
     loggedinUser,
 }
 
@@ -24,13 +25,7 @@ _createMails()
 
 function query(filterBy = getDefaultFilter()) {
     return storageService.query(MAIL_KEY).then(mails => {
-        let mailsToShow = mails.filter(mail => !mail.removedAt)
-
-        if (filterBy.status === 'inbox') {
-            mailsToShow = mailsToShow.filter(mail => mail.to === loggedinUser.email)
-        } else if (filterBy.status === 'sent') {
-            mailsToShow = mailsToShow.filter(mail => mail.from === loggedinUser.email)
-        }
+        let mailsToShow = _filterByStatus(mails, filterBy.status)
 
         if (filterBy.isRead !== null && filterBy.isRead !== undefined) {
             mailsToShow = mailsToShow.filter(mail => mail.isRead === filterBy.isRead)
@@ -50,7 +45,7 @@ function query(filterBy = getDefaultFilter()) {
         if (filterBy.sortBy === 'subject') {
             mailsToShow.sort((mail1, mail2) => mail1.subject.localeCompare(mail2.subject) * sortDir)
         } else {
-            mailsToShow.sort((mail1, mail2) => (mail1.sentAt - mail2.sentAt) * sortDir)
+            mailsToShow.sort((mail1, mail2) => (getMailTime(mail1) - getMailTime(mail2)) * sortDir)
         }
 
         return mailsToShow
@@ -89,7 +84,26 @@ function getEmptyMail({ to = '', subject = '', body = '' } = {}) {
 }
 
 function getDefaultFilter() {
-    return { status: 'inbox', txt: '', isRead: null, sortBy: 'date', sortDir: -1 }
+    return { txt: '', isRead: null, sortBy: 'date', sortDir: -1 }
+}
+
+function getMailTime(mail) {
+    return mail.sentAt || mail.createdAt
+}
+
+function _filterByStatus(mails, status) {
+    switch (status) {
+        case 'inbox':
+            return mails.filter(mail => !mail.removedAt && mail.sentAt && mail.to === loggedinUser.email)
+        case 'sent':
+            return mails.filter(mail => !mail.removedAt && mail.sentAt && mail.from === loggedinUser.email)
+        case 'draft':
+            return mails.filter(mail => !mail.removedAt && !mail.sentAt && mail.from === loggedinUser.email)
+        case 'trash':
+            return mails.filter(mail => mail.removedAt)
+        default:
+            return mails.filter(mail => !mail.removedAt)
+    }
 }
 
 function getMailDateStr(timestamp) {

@@ -7,7 +7,7 @@ const { useParams, useNavigate } = ReactRouterDOM
 export function MailDetails() {
 
     const [mail, setMail] = useState(null)
-    const { mailId } = useParams()
+    const { folder, mailId } = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -25,13 +25,17 @@ export function MailDetails() {
             })
             .catch(err => {
                 console.log('Had issues loading mail:', err)
-                navigate('/mail')
+                navigate(`/mail/${folder}`)
             })
+    }
+
+    function onBack() {
+        navigate(`/mail/${folder}`)
     }
 
     function onMarkAsUnread() {
         mailService.save({ ...mail, isRead: false })
-            .then(() => navigate('/mail'))
+            .then(onBack)
             .catch(err => {
                 console.log('Had issues updating mail:', err)
                 showErrorMsg('Could not update the mail')
@@ -39,10 +43,16 @@ export function MailDetails() {
     }
 
     function onRemoveMail() {
-        mailService.save({ ...mail, removedAt: Date.now() })
+        const isPermanent = (folder === 'trash')
+
+        const removePrm = isPermanent
+            ? mailService.remove(mail.id)
+            : mailService.save({ ...mail, removedAt: Date.now() })
+
+        removePrm
             .then(() => {
-                showSuccessMsg('Mail moved to trash')
-                navigate('/mail')
+                showSuccessMsg(isPermanent ? 'Mail deleted forever' : 'Mail moved to trash')
+                onBack()
             })
             .catch(err => {
                 console.log('Had issues removing mail:', err)
@@ -52,7 +62,7 @@ export function MailDetails() {
 
     if (!mail) return <div className="mail-loading">Loading...</div>
 
-    const sentAtStr = new Date(mail.sentAt).toLocaleString('en-US', {
+    const sentAtStr = new Date(mailService.getMailTime(mail)).toLocaleString('en-US', {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
@@ -63,9 +73,9 @@ export function MailDetails() {
     return (
         <section className="mail-details">
             <div className="mail-details-toolbar">
-                <button className="btn-back" onClick={() => navigate('/mail')}>
+                <button className="btn-back" onClick={onBack}>
                     <span className="btn-icon">←</span>
-                    <span>Back to inbox</span>
+                    <span>Back to {folder}</span>
                 </button>
 
                 <div className="mail-details-actions">
@@ -74,14 +84,14 @@ export function MailDetails() {
                         <span>Mark unread</span>
                     </button>
 
-                    <button onClick={onRemoveMail} title="Delete">
+                    <button onClick={onRemoveMail} title={(folder === 'trash') ? 'Delete forever' : 'Delete'}>
                         <span className="btn-icon">🗑</span>
-                        <span>Delete</span>
+                        <span>{(folder === 'trash') ? 'Delete forever' : 'Delete'}</span>
                     </button>
                 </div>
             </div>
 
-            <h1 className="mail-details-subject">{mail.subject}</h1>
+            <h1 className="mail-details-subject">{mail.subject || '(no subject)'}</h1>
 
             <header className="mail-details-header">
                 <div className="mail-details-from">
@@ -91,7 +101,7 @@ export function MailDetails() {
                 <span className="mail-details-date">{sentAtStr}</span>
             </header>
 
-            <p className="mail-details-to">to {mail.to}</p>
+            <p className="mail-details-to">to {mail.to || '(no recipient)'}</p>
 
             <article className="mail-details-body">{mail.body}</article>
         </section>
